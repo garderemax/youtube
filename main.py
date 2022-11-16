@@ -8,8 +8,9 @@ def scrap(videoId):
     url = "https://www.youtube.com/watch?v=" + videoId + "&format=json"
     embedUrl = "http://www.youtube.com/oembed?url=" + url + "&format=json"
     response = requests.get(url)
+    if (response.status_code != 200):
+        return {"error": response.status_code}
     soup = BeautifulSoup(response.content,'html.parser')
-
 
     result = {}
 
@@ -25,6 +26,7 @@ def scrap(videoId):
 
 def main():
     if len(sys.argv) != 5:
+        print("main.py -i <inputfile> -o <outputfile>")
         return
     inputFilePath = sys.argv[2]
     outputFilePath = sys.argv[4]
